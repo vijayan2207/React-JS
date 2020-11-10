@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
+
 import './Common.css';
 import googlelogo from '../images/google-logo.png';
 import fblogo from '../images/fb-logo.png';
@@ -52,7 +54,7 @@ class Login extends Component {
 
   render() {
    return (
-  
+  <>
     <div class="login">
 
       <div class="split left">
@@ -100,9 +102,9 @@ class Login extends Component {
      
             <div class="text-center">
             <p>
-              <a href="/Login"><img src={googlelogo} alt="" name="google"></img>&nbsp;</a>
-              <a href="/Login"><img src={fblogo} alt="" name="fb"></img>&nbsp;</a>
-              <a href="/Login"><img src={twitterlogo} alt="" name="twitter"></img></a>
+              <Link to="/Login"><img src={googlelogo} alt="" name="google"></img>&nbsp;</Link>
+              <Link to="/Login"><img src={fblogo} alt="" name="fb"></img>&nbsp;</Link>
+              <Link to="/Login"><img src={twitterlogo} alt="" name="twitter"></img></Link>
             </p>
             </div>
             <br></br>
@@ -118,6 +120,7 @@ class Login extends Component {
         </form>
        </div>
       </div>
+      </>
     );
   }
 }
