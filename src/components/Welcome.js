@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 
@@ -7,16 +8,18 @@ import fblogo from '../images/fb-logo.png';
 import twitterlogo from '../images/twitter-logo.png';
 import sidelogo from '../images/logistics-bg.png';
 
-class Register extends Component {
+export default class Welcome extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        origincountry: this.props.location.state.origincountry,
+        destinationcountry: this.props.location.state.destinationcountry,
       firstname: '',
       lastname: '',
       email: '',
       phone: '',
       password: '',
-      error: '',
+      error: ''
     };
 
     this.handlePassChange = this.handlePassChange.bind(this);
@@ -113,8 +116,10 @@ class Register extends Component {
           <br></br>
           <div><span class="txt1"><a href="/" className="Home-LoginText">Home</a></span></div>
 
-            <div class="login-header"><h1>Sign Up</h1></div>
+            <div class="login-header"><h1>You are just few steps away</h1></div>
            <p></p>
+           <div class="login-header"><h4>Please register to get a free Quote in few seconds</h4></div>
+
           <br></br>
           <br></br>
           
@@ -138,8 +143,8 @@ class Register extends Component {
           <br></br>
           <div class="text-field"> <Link to={{ pathname: '/Quote', state: { firstname: this.state.firstname,
       lastname: this.state.lastname,
-      email: this.state.email, phone: this.state.phone
-        } }}><input type="button" value="Register"></input></Link>  
+      email: this.state.email, phone: this.state.phone, origincountry: this.state.origincountry, destinationcountry: this.state.destinationcountry
+        } }}><input type="button" value="Register & Get a Free Quote"></input></Link>  
       </div>        <br></br>
           <br></br>
 
@@ -166,5 +171,3 @@ class Register extends Component {
     );
   }
 }
-
-export default Register;

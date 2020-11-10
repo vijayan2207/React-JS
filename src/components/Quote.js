@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Link} from "react-router-dom";
 
 import './Common.css';
 import sidelogo from '../images/logistics-bg.png';
@@ -6,13 +7,13 @@ import sidelogo from '../images/logistics-bg.png';
 class Quote extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.location);
+
     this.state = {
       shippingType: '',
-      airShipping: '',
-      oceanShipping: '',
-      originCountry: '',
+      originCountry: this.props.location.state.origincountry,
       originCity: '',
-      destinationCountry: '',
+      destinationCountry: this.props.location.state.destinationcountry,
       destinationCity: '',
       dutyRates: '',
       packages: '',
@@ -20,61 +21,40 @@ class Quote extends Component {
       length: '',
       width: '',
       height: '',
-      dimensionsLbsIn: '',
-      dimensionsCmKg: '',
+      measure: '',
+      dimensions: '',
+      firstname: this.props.location.state.firstname,
+      lastname: this.props.location.state.lastname,
+      email: this.props.location.state.email,
+      phone: this.props.location.state.phone
     };
 
     this.handleShippingTypeChange = this.handleShippingTypeChange.bind(this);
-    this.handleAirShippingChange = this.handleAirShippingChange.bind(this);
-    this.handleOceanShippingChange = this.handleOceanShippingChange.bind(this);
     this.handleOriginCountryChange = this.handleOriginCountryChange.bind(this);
     this.handleOriginCityChange = this.handleOriginCityChange.bind(this);
     this.handleDestinationCountryChange = this.handleDestinationCountryChange.bind(this);
     this.handleDestinationCityChange = this.handleDestinationCityChange.bind(this);
     this.handleDutyRatesChange = this.handleDutyRatesChange.bind(this);
+    this.handleTermsChange = this.handleTermsChange.bind(this);
     this.handlePackagesChange = this.handlePackagesChange.bind(this);
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleLengthChange = this.handleLengthChange.bind(this);
     this.handleWidthChange = this.handleWidthChange.bind(this);
     this.handleHeightChange = this.handleHeightChange.bind(this);
-    this.handleDimensionsLbsInChange = this.handleDimensionsLbsInChange.bind(this);
-    this.handleDimensionsCmKgChange = this.handleDimensionsCmKgChange.bind(this);
+    this.handleDimensions = this.handleDimensions.bind(this);
+    this.handleMeasure = this.handleMeasure.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-//   changeTitle = () => {
-//     this.setState({ title: "Ocean" });
-//  };
-
- changeTitle = e => {
-  const { name, value } = e.target;
-
-  this.setState({
-    [name]: value
-  });
-};
-
- 
 
   handleShippingTypeChange(evt) {
     this.setState({
       shippingType: evt.target.value,
     });
+    console.log(evt.target.value);
+
   };
-  
-  handleAirShippingChange(evt) {
-    this.setState({
-      airShipping: evt.target.value,
-    });
-  };
-  
-  handleOceanShippingChange(evt) {
-    this.setState({
-      oceanShipping: evt.target.value,
-    });
-  };
-  
+        
   handleOriginCountryChange(evt) {
     this.setState({
       originCountry: evt.target.value,
@@ -99,6 +79,12 @@ class Quote extends Component {
     });
   };
   
+  handleTermsChange(evt) {
+    this.setState({
+      terms: evt.target.value,
+    });
+  };
+
   handleDutyRatesChange(evt) {
     this.setState({
       dutyRates: evt.target.value,
@@ -135,19 +121,26 @@ class Quote extends Component {
     });
   };
   
-  handleDimensionsLbsInChange(evt) {
+  handleDimensions(evt) {
     this.setState({
-      dimensionsLbsIn: evt.target.value,
+      dimensions: evt.target.value,
     });
   };
   
-  handleDimensionsCmKgChange(evt) {
+  handleMeasure(evt) {
     this.setState({
-      dimensionsCmKg: evt.target.value,
+      measure: evt.target.value,
     });
   };
   
+  changeTitle = e => {
+    const { name, value } = e.target;
   
+    this.setState({
+      [name]: value
+    });
+  };
+
   dismissError() {
     this.setState({ error: '' });
   }
@@ -194,9 +187,9 @@ class Quote extends Component {
           
                  <div class="quote-text"><label>Shippig Type</label></div>
         <div class="quote-text">
-          <input type="radio" id="airShipping" onClick={this.changeTitle} name="shippingradio" value="1" /><label>Air</label>
+          <input type="radio" id="airShipping" onChange={this.handleShippingTypeChange} name="airshipping" value="Air" /><label>Air</label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="radio" id="oceanShipping" onClick={this.changeTitle} name="shippingradio" value="2" /><label>Ocean</label>
+        <input type="radio" id="oceanShipping" onChange={this.handleShippingTypeChange} name="oceanshipping" value="Ocean" /><label>Ocean</label>
         </div>
         <p></p>
         
@@ -212,26 +205,41 @@ class Quote extends Component {
           <input type="text" id="destinationCity" data-test="destinationCity" placeholder="destination city" value={this.state.destinationCity} onChange={this.handleDestinationCityChange} />
         </div>
         <p></p>
-        <br></br>        <div class="quote-text"><label>Duty Rates</label></div>
+        <br></br>  
+        <div class="quote-text"><label>Terms</label>
+        <label class="quote-text2">Duty Rates(%)</label></div>
         <div class="quote-text">
-          <select id="dutyRates" name="dutyRates" data-test="dutyRates" placeholder="dutyRates" value={this.state.dutyRates} onChange={this.handleDutyRatesChange}>
-            <option value="0">5.0</option>
-            <option value="1">6.0</option>
-            <option value="2">7.0</option>
-            <option value="4">8.0</option>
+          <select style={{width: '180px'}} id="terms" name="terms" placeholder="terms" onChange={this.handleTermsChange}>
+            <option value="None" selected>-None-</option>
+            <option value="Door to Door" >Door to Door</option>
+            <option value="Port to Door">Port to Door</option>
+            <option value="Port to Port">Port to Door</option>
+          </select>
+            <select class="quote-text3" id="dutyRates" name="dutyRates" placeholder="dutyRates" onChange={this.handleDutyRatesChange}>
+            <option value="Not Selected" selected>Duty Rate %</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
           </select>
           </div>
+         
           <br></br>         <div class="quote-text"><label>Package Details</label></div> 
           <p></p>
           <div class="quote-text">
-          
-                
+                     
                
           </div>         
-          <div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Weight: </label><input type="number" min="1" max="5" id="weight" data-test="weight" placeholder="Wt" value={this.state.weight} onChange={this.handleWeightChange} /><label>{this.state.measure}</label></div>
-         <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Length: </label><input type="number" min="1" max="5" id="length" data-test="length" placeholder="Len" value={this.state.length} onChange={this.handleLengthChange} /><label>{this.state.dimensions}</label></div>
-          <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Width:  </label>&nbsp;<input type="number" min="1" max="5" id="width" data-test="width" placeholder="W" value={this.state.width} onChange={this.handleWidthChange} /><label>{this.state.dimensions}</label></div>
-          <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Height: </label><input type="number" min="1" max="5" id="height" data-test="height" placeholder="Ht" value={this.state.height} onChange={this.handleHeightChange} /><label>{this.state.dimensions}</label>
+          <div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Weight: </label><input type="number" min="1" max="99" id="weight" data-test="weight" placeholder="Wt" value={this.state.weight} onChange={this.handleWeightChange} /><label>{this.state.measure}</label></div>
+         <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Length: </label><input type="number" min="1" max="99" id="length" data-test="length" placeholder="Len" value={this.state.length} onChange={this.handleLengthChange} /><label>{this.state.dimensions}</label></div>
+          <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Width:  </label>&nbsp;<input type="number" min="1" max="99" id="width" data-test="width" placeholder="W" value={this.state.width} onChange={this.handleWidthChange} /><label>{this.state.dimensions}</label></div>
+          <p></p><div class="quote-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Height: </label><input type="number" min="1" max="99" id="height" data-test="height" placeholder="Ht" value={this.state.height} onChange={this.handleHeightChange} /><label>{this.state.dimensions}</label>
         </div>
         <p></p>
           <div class="quote-text"><label>Dimensions</label></div>
@@ -239,17 +247,34 @@ class Quote extends Component {
           <input type="radio" id="lbs" name="measure" value="lbs" onClick={this.changeTitle}/><label>lbs&nbsp;</label><label>/</label>
           <input type="radio" id="kg" name="measure" value="kg" onClick={this.changeTitle}/><label>kg</label>&nbsp;&nbsp;&nbsp;&nbsp;
         
-          <input type="radio" id="in" name="dimensions" value="in" onClick={this.changeTitle}/><label>in&nbsp;</label><label>/</label>
+          <input type="radio" id="inches" name="dimensions" value="inches" onClick={this.changeTitle}/><label>in&nbsp;</label><label>/</label>
           <input type="radio" id="cm" name="dimensions" value="cm" onClick={this.changeTitle}/><label>cm</label>
         </div>
         <p></p>
           <br></br>
-        <div class="text-center"><input type="submit" value="      GET A FREE QUOTE     " data-test="submit" /></div>
+        <div class="text-center">
+          <Link to={{ pathname: '/QuoteComplete', state: { shippingType: this.state.shippingType,
+      originCountry: this.state.originCountry,
+      originCity: this.state.originCity,
+      destinationCountry: this.state.destinationCountry,
+      destinationCity: this.state.destinationCity,
+      terms: this.state.terms,
+      dutyRates: this.state.dutyRates,
+      packages: this.state.packages,
+      weight: this.state.weight,
+      length: this.state.length,
+      width: this.state.width,
+      height: this.state.height,
+      measure: this.state.measure,
+      dimensions: this.state.dimensions, 
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      phone: this.state.phone  } }}><input type="button" value="Get a Quote"></input></Link>
+        </div>
         <p></p>
         <p></p>
-
-            
-     
+ 
                            
              
         </form>

@@ -26,6 +26,18 @@
     font-family: arial;
 }
 
+.quote-header {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: rgb(247, 239, 173);
+    text-align: left;
+    font-family: arial;
+}
+
 .Banner-Text1 {
     text-align: center;
     color: rgb(11, 81, 114);
@@ -114,6 +126,22 @@
     margin-left: 20%;
     top: 5%;
 }
+
+.quote-text2 {
+    margin-left: 35%;
+    top: 5%;
+}
+
+.quote-text3 {
+    margin-left: 10%;
+    top: 5%;
+}
+
+.quote-left-align {
+    margin-left: 10%;
+    top: 5%;
+}
+
 .text-border {
      border: none;
      border-bottom: 2px solid whitesmoke;
