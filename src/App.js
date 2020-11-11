@@ -13,7 +13,7 @@ import ErrorPage from "./components/ErrorPage";
 export default class App extends Component {
   render() {
     return (
-      <Router>
+      <Router>     
         <div>
           <Switch>
               <Route exact path="/" component={Home} />

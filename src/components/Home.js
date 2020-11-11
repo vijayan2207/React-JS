@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link} from "react-router-dom";
+import { Link} from "react-router-dom";
 import './Common.css';
 import banner from '../images/logistics-bg.png';
 
@@ -31,7 +31,7 @@ export default class Home extends Component {
     return (
       <>
         <div class="Header">
-          <img src={banner} alt="banner" width="80%"/>
+          <img src={banner} alt="banner" width="87%"/>
         </div>
 
         <div class="Banner-Text1">Ship Air & Ocean Freight</div>

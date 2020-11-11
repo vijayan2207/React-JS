@@ -16,7 +16,7 @@
 
 .login-header {
     background-color: #282c34;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -24,6 +24,8 @@
     color: white;
     text-align: left;
     font-family: arial;
+    overflow: hidden;
+
 }
 
 .quote-header {
@@ -215,5 +217,3 @@
     width: 675px;
     height: 610px;
   }
-  
-  
